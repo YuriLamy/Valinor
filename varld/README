@@ -1,0 +1,72 @@
+VarLD README
+==============
+Version: 1.0
+Last Updated: 25 Jan 2010
+
+
+Pre-requisites and Necessary Files
+==================================
+Java version 1.5 and above is needed.
+Can check by typing on command prompt > java -version
+
+Below is a list of the necessary files that are needed for VarLD to work.
+These files should be placed in the same directory.
+1. commons-primitives-1.0.jar (Apache Commons Primitives)
+2. commons-cli-1.2.jar (Apache Commons Command Line arguments parser)
+3. rgenetics-1.0.jar (VarLD implementation)
+4. JAMA (a Java Matrix package which is already included in rgenetics-1.0.jar)
+
+
+Synopsis
+========
+  java -jar rgenetics-1.0.jar -p VarLD [options] input_file1 input_file2
+
+
+Description
+===========
+VarLD program reads two genotype input files belonging to two different populations/groups, 
+and calculates the VarLD statistic between them.
+
+Format of input genotype file: a tab-delimited text file with columns
+1. rs_id/snp_id
+2. position
+3. genotype_1
+4. genotype_2
+5. etc.. 
+
+Positions are to be in ascending order, and are assumed to belong to the same chromosome/gene.
+The position information is taken from the first input file.
+For targeted varLD, if start/end position is not specified, it will assume the first/last snp
+in the first input file.
+
+Genotypes are coded as numerals 1,2,3,4 with 
+1 as homozygote AA, 
+2 as heterozygote Aa, 
+3 as homozygote aa, and 
+4 as missing.
+Each row represents one SNP, while the columns represent the individuals/samples.
+
+Format of genomewide VarLD output: a tab-delimited text file with columns
+1. population identifier 1
+2. population identifier 2
+3. mean basepair position of sliding window of snps considered
+4. raw varLD statistic
+
+An example input dataset, and additional scripts for standardizing genomewide varLD for plotting and interpretation
+can be found at http://www.nus-cme.org.sg/software/varld.html
+
+
+Options
+=======
+-p,--program <arg>       VarLD
+-h,--help                help, prints usage
+-f,--missingness <arg>   missingness cutoff threshold, default=0.2
+-m,--maf <arg>           minor allele freq cutoff threshold, default=0.05
+-n,--num <arg>           number of snps in sliding window, default=50
+-o,--output <arg>        specified output filename to write
+-t,--targeted            targeted varLD calculation, ignores sliding window.
+                         Default is genomewide varLD
+-s,--start <arg>         start position for targeted varLD
+-e,--end   <arg>         end position for targeted varLD
+-i,--iterations <arg>    number of iterations to perform for targeted
+                         varLD calculation
